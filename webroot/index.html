@@ -1,0 +1,166 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="/dist/tree.js"></script>
+    <script src="/dist/tree-node.js"></script>
+    <script src="/dist/search-result.js"></script>
+    <script src="/index.js"></script>
+    <script src="/viz.js"></script>
+    <style>
+        input.form-control {
+            width: 2cm;
+            display: inline-block;
+        }
+
+        div.control-box {
+            margin: 0.5em;
+            padding: 0.5em;
+            border: 1px solid #AAA;
+            border-radius: 5px;
+            background-color: #EEE;
+        }
+
+        span.spacing {
+            display: inline-block;
+            width: 1em;
+        }
+
+        .toastSuccess .toast-header {
+            background-color: green;
+            color: white;
+        }
+
+        .toastSuccess .toast-body {
+            background: RGBA(0, 255, 0, 0.2);
+        }
+
+        .toastFail .toast-header {
+            background-color: red;
+            color: white;
+        }
+
+        .toastFail .toast-body {
+            background: RGBA(255, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="navbar navbar-dark bg-dark">
+            <div class="container">
+                <a href="#" class="navbar-brand">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-tree-fill" fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M8 0a.5.5 0 0 1 .416.223l3 4.5A.5.5 0 0 1 11 5.5h-.098l2.022 3.235a.5.5 0 0 1-.424.765h-.191l1.638 3.276a.5.5 0 0 1-.447.724h-11a.5.5 0 0 1-.447-.724L3.69 9.5H3.5a.5.5 0 0 1-.424-.765L5.098 5.5H5a.5.5 0 0 1-.416-.777l3-4.5A.5.5 0 0 1 8 0z" />
+                        <path d="M7 13.5h2V16H7v-2.5z" />
+                    </svg>
+                    <strong>B-Baum<span class="spacing"></span>|<span class="spacing"></span>N. Heidbrink, M.
+                        Münnekhoff<span class="spacing"></span>|<span class="spacing"></span>DHBW Stuttgart</strong>
+                </a>
+            </div>
+        </div>
+
+    </header>
+    <div>
+        <div id="modal" class="modal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="toast_container" style="position: fixed; bottom: 0.5em; right: 0.5em; z-index: 1000000;">
+        </div>
+        <div class="text-center" style="margin: 0 2%; width: 67%; display: inline-block; top: 0">
+            <div class="control-box">
+                <div style="display: inline-block;">
+                    <label for="max_elements">Max. elements:</label>
+                    <input type="number" class="form-control" id="max_elements" value="2"></input>
+                    <button class="btn btn-danger" id="reset">Reset</button>
+                    <span style="display: inline-block; width: 4em;"></span>
+                </div>
+                <div style="display: inline-block;">
+                    <div>
+                        <label for="scale_cbx">No scrolling:</label>
+                        <input type="checkbox" id="scale_width_cbx">
+                    </div>
+                </div>
+            </div>
+            <div class="control-box" style="width: calc(50% - 0.75em); display: inline-block; margin: 0 0.25em 0 0;">
+                <label for="op_val">Insert/delete:</label>
+                <input type="text" class="form-control" id="op_val"></input>
+                <button class="btn btn-primary" id="insert_btn">Insert</button>
+                <button class="btn btn-danger" id="delete_btn">Delete</button>
+            </div>
+            <div class="control-box" style="width: calc(50% - 0.75em); display: inline-block; margin: 0;">
+                <label for="search_val">Search:</label>
+                <input type="text" class="form-control" id="search_val"></input>
+                <button class="btn btn-primary" id="search_btn">Search</button>
+            </div>
+            <div class="control-box">
+                <label for="csv_file">Upload CSV:</label>
+                <input type="file" id="csv_file" />
+                <button class="btn btn-primary" id="csv_btn">Import CSV</button>
+            </div>
+            <div class="control-box">
+                <label for="rand_min">Random min:</label>
+                <input type="number" class="form-control" id="rand_min"></input>
+                <label for="rand_max">Random max:</label>
+                <input type="number" class="form-control" id="rand_max"></input>
+                <label for="rand_cnt">Random count:</label>
+                <input type="number" class="form-control" id="rand_cnt"></input>
+                <button class="btn btn-primary" id="rand_btn">Insert random (no check if already in)</button>
+            </div>
+            <div id="viz" style="width: 90%; overflow-y: auto; margin-top: 2%;"></div>
+        </div>
+
+        <div class="text-center" style="
+        margin: 0 2%;
+        display: inline-block;
+        max-height: 90vh;
+        position: absolute;
+        overflow-y: auto;
+        ">
+            <div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Step</th>
+                            <th scope="col">Action</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tree_hist"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
