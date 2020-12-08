@@ -1,6 +1,13 @@
 # DHBW DB Implementierungen
 
 ## Setup
+
+### From Docker Hub
+- Pull with `docker pull sarcaustech/dhbw-db-implementierungen:latest`
+- Run with `docker run --rm -p 80:80 sarcaustech/dhbw-db-implementierungen:latest`
+- Use in Dockerfile with `FROM sarcaustech/dhbw-db-implementierungen:latest`
+
+### From source code
 1. [Install Docker](https://docs.docker.com/get-docker/)
 2. Open terminal in project directory
 3. `docker build -t dhbw-db-implementierungen:latest .`

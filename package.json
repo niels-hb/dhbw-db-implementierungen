@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepush": "docker build . --tag sarcaustech/dhbw-db-implementierungen:latest",
+    "push": "docker push sarcaustech/dhbw-db-implementierungen:latest"
   },
   "repository": {
     "type": "git",
