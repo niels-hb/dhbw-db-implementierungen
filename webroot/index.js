@@ -3,7 +3,7 @@
 // Get string how to identiy a node (for graph links)
 TreeNode.prototype.getNodeIdentifier = function () { return this.values[0] }
 
-/* 
+/*
   Transform node to Viz string elements
     - vizNode describes node
     - vizLink describes links to node's children
@@ -72,14 +72,14 @@ class TreeHistory {
             str += `<tr>
                 <td>${elem.step}</td>
                 <td>${elem.title}</td>
-                <td><button class="btn btn-primary btn-sm" 
+                <td><button class="btn btn-primary btn-sm"
                         onclick="treeController.restoreFromTreeHistory(${elem.step}, true)"
                     >View</button></td>
             </tr>`
         })
         return str;
     }
-    /** 
+    /**
      * Add new history record
      * @param {string} title Title of the transaction
      * @param {string} func One of the following: 'reset', 'insert', 'delete'
@@ -126,15 +126,15 @@ class TreeHistory {
 
 /** Controller for page's tree */
 class TreeController {
-    /** 
+    /**
      * Create controller instance
-     * @param {Tree} tree Optional initial tree (default: empty tree with max elements = 2)
+     * @param {Tree} tree Optional initial tree (default: empty tree with k = 2)
      */
     constructor(tree) {
         this.tree = tree || new Tree(2)
         this.treeHistory = new TreeHistory()
     }
-    /** 
+    /**
      * Draws tree graph and the history
      * @param {boolean} printHistory If true, history is printed
      */
@@ -154,10 +154,10 @@ class TreeController {
      * @param {boolean} drawTree If true, tree and hostory are printed
      */
     resetTree(drawTree) {
-        const max = document.getElementById("max_elements").value
+        const min = document.getElementById("min_elements").value
         this.tree.reset()
         this.treeHistory.reset()
-        this.treeHistory.push(`Reset with max. ${max} Elements`, 'reset', max)
+        this.treeHistory.push(`Reset with k = ${min}`, 'reset', min)
         if (drawTree) { this.drawTree(true) }
     }
     /**
@@ -359,5 +359,3 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     })
 })
-
-

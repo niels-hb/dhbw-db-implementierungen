@@ -29,7 +29,7 @@ class TreeNode {
      * Returns true if this node is currently in an overflow state.
      */
     isOverflow(): boolean {
-        return this.values.length > this.tree.maxElements;
+        return this.values.length > this.tree.getMaxElements();
     }
 
     /**

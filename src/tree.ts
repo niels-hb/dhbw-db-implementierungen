@@ -1,19 +1,25 @@
 class Tree {
-    // Maximum number values one node can hold.
-    maxElements: number;
+    private k: number;
 
     // The root node in this tree.
     root: TreeNode = new TreeNode(this);
 
-    constructor(maxElements: number) {
-        this.maxElements = maxElements;
+    constructor(k: number) {
+        this.k = k;
     }
 
     /**
      * Helper function to determine the minimum number of elements one node can hold based on the formula.
      */
     getMinElements(): number {
-        return Math.floor(this.maxElements / 2);
+        return this.k;
+    }
+
+    /**
+     * Helper function to determine the maximum number of elements one node can hold based on the formula.
+     */
+    getMaxElements(): number {
+        return this.k * 2;
     }
 
     /**
