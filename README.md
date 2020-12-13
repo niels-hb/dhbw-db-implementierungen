@@ -4,7 +4,7 @@
 
 ### From Docker Hub
 - Pull with `docker pull sarcaustech/dhbw-db-implementierungen:latest`
-- Run with `docker run --rm -p 80:80 sarcaustech/dhbw-db-implementierungen:latest`
+- Run with `docker run --rm -p 80:80 sarcaustech/dhbw-db-implementierungen:latest` (the app wil be available at http://localhost)
 - Use in Dockerfile with `FROM sarcaustech/dhbw-db-implementierungen:latest`
 
 ### From source code
@@ -12,6 +12,7 @@
 2. Open terminal in project directory
 3. `docker build -t dhbw-db-implementierungen:latest .`
 4. `docker run --rm -p 80:80 dhbw-db-implementierungen:latest`
+5. The app will be available at http://localhost
 
 ## How to use
 ### Tree setup
