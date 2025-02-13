@@ -1,0 +1,5 @@
+{
+    "image": "node:15-alpine",
+    "appPort": 8080,
+    "postCreateCommand": "apk add git && npm i -g http-server"
+}
